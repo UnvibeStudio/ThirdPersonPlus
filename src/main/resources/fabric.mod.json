@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "thirdpersonplus",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": ["UnvibeStudio", "Leawind (original author of Third Person)"],
+  "contact": {
+    "homepage": "${mod_url_home}",
+    "issues": "${mod_url_issue}",
+    "sources": "${mod_url_src}"
+  },
+  "license": "${mod_license}",
+  "icon": "${mod_icon}",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["com.github.leawind.thirdperson.fabric.ThirdPersonFabric"],
+    "modmenu": ["com.github.leawind.thirdperson.fabric.ModMenuEntry"]
+  },
+  "mixins": [
+    "thirdpersonplus.mixins.json",
+    "thirdpersonplus-common.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": ">=${minecraft_version_min} <=${minecraft_version_max}",
+    "java": ">=25",
+    "fabric-api": "*"
+  },
+  "recommends": {
+    "cloth-config2": "*",
+    "modmenu": "*"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "Source": "https://github.com/UnvibeStudio/ThirdPersonPlus",
+        "Issues": "https://github.com/UnvibeStudio/ThirdPersonPlus/issues",
+        "Based on: Leawind's Third Person": "https://github.com/Leawind/Third-Person"
+      }
+    },
+    "modmenu:clientsideOnly": true
+  }
+}
