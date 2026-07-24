@@ -83,6 +83,24 @@ public abstract class AbstractConfig {
   @Expose public boolean render_crosshair_when_not_aiming = true;
   @Expose public boolean render_crosshair_when_aiming = true;
   @Expose public boolean hide_crosshair_when_flying = true;
+  // -------------------------------------------------------------------------------------------------- Soft target lock
+  @Expose public boolean target_lock_enabled = true;
+  @Expose public double target_lock_max_distance = 24;
+  @Expose public double target_lock_cone_angle = 30;
+  @Expose public boolean target_lock_require_line_of_sight = true;
+  @Expose public boolean target_lock_include_players = true;
+  @Expose public boolean target_lock_include_passive = false;
+  @Expose public boolean target_lock_exclude_allies = true;
+  @Expose public boolean target_lock_highlight = true;
+  @Expose public int target_lock_lost_sight_grace_ticks = 40;
+  /** Scoring weights and bonuses, combined into a weighted sum by the target selector. */
+  @Expose public double target_lock_weight_angle = 1.0;
+
+  @Expose public double target_lock_weight_distance = 0.35;
+  @Expose public double target_lock_bonus_current = 0.25;
+  @Expose public double target_lock_bonus_aggressor = 0.5;
+  @Expose public double target_lock_bonus_boss = 0.4;
+  @Expose public double target_lock_bonus_hostile = 0.2;
 
   public enum PlayerRotateMode {
     INTEREST_POINT("interest_point"),

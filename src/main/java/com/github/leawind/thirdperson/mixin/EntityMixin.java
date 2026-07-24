@@ -4,6 +4,8 @@ import com.github.leawind.thirdperson.ThirdPerson;
 import com.github.leawind.thirdperson.ThirdPersonStatus;
 import com.github.leawind.thirdperson.api.base.GameEvents;
 import com.github.leawind.thirdperson.api.client.event.EntityTurnStartEvent;
+import com.github.leawind.thirdperson.core.targetlock.TargetLockManager;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -22,6 +24,20 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @SuppressWarnings("unused")
 @Mixin(value = Entity.class, priority = 2000)
 public class EntityMixin {
+  /**
+   * Highlights the soft-lock target using the vanilla glowing outline.
+   *
+   * <p>This is purely client side: no glowing tag is sent to or required from the server.
+   */
+  @ModifyReturnValue(method = "isCurrentlyGlowing", at = @At("RETURN"))
+  private boolean highlightLockedTarget(boolean isGlowing) {
+    if (isGlowing) {
+      return true;
+    }
+    return ThirdPerson.getConfig().target_lock_highlight
+        && TargetLockManager.isTarget((Entity) (Object) this);
+  }
+
   /**
    * 实体探测方块
    *

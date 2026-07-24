@@ -6,6 +6,7 @@ import com.github.leawind.thirdperson.ThirdPersonResources;
 import com.github.leawind.thirdperson.ThirdPersonStatus;
 import com.github.leawind.thirdperson.core.rotation.RotateStrategy;
 import com.github.leawind.thirdperson.core.rotation.RotateTargetEnum;
+import com.github.leawind.thirdperson.core.targetlock.TargetLockManager;
 import com.github.leawind.thirdperson.core.rotation.SmoothTypeEnum;
 import com.github.leawind.thirdperson.util.FiniteChecker;
 import com.github.leawind.thirdperson.util.ItemPredicateUtil;
@@ -413,6 +414,12 @@ public class EntityAgent {
    * <p>当相机在面前时，兴趣点是相机
    */
   public @Nullable Vec3 getInterestPoint() {
+    // A locked target wins over the crosshair. This is what makes the lock "soft": only the look
+    // direction follows the target, the camera itself stays under the player's control.
+    var lockedPoint = TargetLockManager.getInterestPoint();
+    if (lockedPoint != null) {
+      return lockedPoint;
+    }
     if (LMath.subtractDegrees(
             getRawPlayerEntity().yBodyRot, ThirdPerson.CAMERA_AGENT.getRelativeRotation().y)
         > 90) {

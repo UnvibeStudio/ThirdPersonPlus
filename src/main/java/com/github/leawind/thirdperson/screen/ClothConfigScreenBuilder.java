@@ -150,6 +150,134 @@ public class ClothConfigScreenBuilder extends ConfigScreenBuilder {
               v -> config.camera_distance_max = Math.max(v, config.camera_distance_min),
               entryBuilder));
       CATEGORY_COMMON.addEntry(Subcategory_Camera_Distance_Adjustment.build());
+
+      // SubCategory: Soft target lock
+      final var Subcategory_Target_Lock =
+          buildSubCategory("target_lock", entryBuilder).setExpanded(false);
+      Subcategory_Target_Lock.add(
+          buildBooleanEntry(
+              "target_lock_enabled",
+              defaults.target_lock_enabled,
+              config.target_lock_enabled,
+              v -> config.target_lock_enabled = v,
+              entryBuilder));
+      Subcategory_Target_Lock.add(
+          buildDoubleEntry(
+              "target_lock_max_distance",
+              1,
+              64,
+              defaults.target_lock_max_distance,
+              config.target_lock_max_distance,
+              v -> config.target_lock_max_distance = v,
+              entryBuilder));
+      Subcategory_Target_Lock.add(
+          buildDoubleEntry(
+              "target_lock_cone_angle",
+              1,
+              90,
+              defaults.target_lock_cone_angle,
+              config.target_lock_cone_angle,
+              v -> config.target_lock_cone_angle = v,
+              entryBuilder));
+      Subcategory_Target_Lock.add(
+          buildBooleanEntry(
+              "target_lock_require_line_of_sight",
+              defaults.target_lock_require_line_of_sight,
+              config.target_lock_require_line_of_sight,
+              v -> config.target_lock_require_line_of_sight = v,
+              entryBuilder));
+      Subcategory_Target_Lock.add(
+          buildIntSliderEntry(
+              "target_lock_lost_sight_grace_ticks",
+              0,
+              200,
+              defaults.target_lock_lost_sight_grace_ticks,
+              config.target_lock_lost_sight_grace_ticks,
+              v -> config.target_lock_lost_sight_grace_ticks = v,
+              entryBuilder));
+      Subcategory_Target_Lock.add(
+          buildBooleanEntry(
+              "target_lock_include_players",
+              defaults.target_lock_include_players,
+              config.target_lock_include_players,
+              v -> config.target_lock_include_players = v,
+              entryBuilder));
+      Subcategory_Target_Lock.add(
+          buildBooleanEntry(
+              "target_lock_include_passive",
+              defaults.target_lock_include_passive,
+              config.target_lock_include_passive,
+              v -> config.target_lock_include_passive = v,
+              entryBuilder));
+      Subcategory_Target_Lock.add(
+          buildBooleanEntry(
+              "target_lock_exclude_allies",
+              defaults.target_lock_exclude_allies,
+              config.target_lock_exclude_allies,
+              v -> config.target_lock_exclude_allies = v,
+              entryBuilder));
+      Subcategory_Target_Lock.add(
+          buildBooleanEntry(
+              "target_lock_highlight",
+              defaults.target_lock_highlight,
+              config.target_lock_highlight,
+              v -> config.target_lock_highlight = v,
+              entryBuilder));
+      Subcategory_Target_Lock.add(
+          buildDoubleEntry(
+              "target_lock_weight_angle",
+              0,
+              4,
+              defaults.target_lock_weight_angle,
+              config.target_lock_weight_angle,
+              v -> config.target_lock_weight_angle = v,
+              entryBuilder));
+      Subcategory_Target_Lock.add(
+          buildDoubleEntry(
+              "target_lock_weight_distance",
+              0,
+              4,
+              defaults.target_lock_weight_distance,
+              config.target_lock_weight_distance,
+              v -> config.target_lock_weight_distance = v,
+              entryBuilder));
+      Subcategory_Target_Lock.add(
+          buildDoubleEntry(
+              "target_lock_bonus_current",
+              0,
+              4,
+              defaults.target_lock_bonus_current,
+              config.target_lock_bonus_current,
+              v -> config.target_lock_bonus_current = v,
+              entryBuilder));
+      Subcategory_Target_Lock.add(
+          buildDoubleEntry(
+              "target_lock_bonus_aggressor",
+              0,
+              4,
+              defaults.target_lock_bonus_aggressor,
+              config.target_lock_bonus_aggressor,
+              v -> config.target_lock_bonus_aggressor = v,
+              entryBuilder));
+      Subcategory_Target_Lock.add(
+          buildDoubleEntry(
+              "target_lock_bonus_boss",
+              0,
+              4,
+              defaults.target_lock_bonus_boss,
+              config.target_lock_bonus_boss,
+              v -> config.target_lock_bonus_boss = v,
+              entryBuilder));
+      Subcategory_Target_Lock.add(
+          buildDoubleEntry(
+              "target_lock_bonus_hostile",
+              0,
+              4,
+              defaults.target_lock_bonus_hostile,
+              config.target_lock_bonus_hostile,
+              v -> config.target_lock_bonus_hostile = v,
+              entryBuilder));
+      CATEGORY_COMMON.addEntry(Subcategory_Target_Lock.build());
     }
     // ===============================================================================================================//
     // Category: smooth factors

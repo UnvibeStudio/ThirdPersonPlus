@@ -32,9 +32,12 @@ push all the way in to first person, with smooth body and head movement.
 - **Free camera adjustment** — hold `Z` and move the mouse to shift the on-screen offset; the mouse
   wheel changes the distance. Tap `CapsLock` to switch shoulders (left / right); hold to center.
 - **Soft target lock** *(new in Third Person Plus)* — press the lock key to softly lock onto the best
-  entity in a cone in front of the crosshair. Your head and aim gently track the target and it is
-  highlighted with a marker, while the camera stays fully under your control. Press again to cycle to
-  the next target; it auto-clears when the target dies, leaves range, or goes out of sight.
+  entity in a cone in front of the crosshair. Your head and aim smoothly track the target and it gets
+  a glowing outline, while the camera stays fully under your control. Press again to cycle to the next
+  target (cycling past the last one releases the lock), or hold the key to release it immediately. The
+  lock clears itself when the target dies, leaves range, or stays out of sight. Candidates are ranked
+  by a configurable weighted score (aim accuracy, proximity, current target, whether it is attacking
+  you, bosses and hostiles).
 - **Smart aim mode** — automatically switches to an aiming offset based on the item in use
   (customizable, so it works with items from other mods).
 - **Disable anytime** — toggle the mod off in-game to revert to the vanilla third-person view.

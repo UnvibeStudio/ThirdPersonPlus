@@ -81,9 +81,16 @@ Lives in `core/targetlock/`:
 - `TargetSelector` — scans a cone from the camera toward the crosshair and scores candidates
   (angle to cone axis, distance, current/aggressor/boss bonuses, ...). The scoring is a weighted sum
   of named criteria so new criteria can be added.
-- `TargetLockManager` — holds lock state, `lock()/switchTarget()/clear()`, per-tick validation, and
-  drives the head/aim via the existing rotation **interest point** system. The camera stays free
-  (soft lock). Highlight = client-side glow; a HUD marker is drawn over the target.
+- `TargetLockManager` — holds the lock state, handles press (lock / cycle) and hold (release),
+  validates the target every client tick, and drives the head/aim through the existing rotation
+  **interest point** system, so the camera stays free (that is what makes the lock "soft").
+
+Integration points: `EntityAgent#getInterestPoint` returns the locked target, `RotateStrategy` gains a
+`target_lock` factor that selects `INTEREST_POINT` rotation, `EntityMixin` forces
+`Entity#isCurrentlyGlowing` for the target (client-side highlight, no server involvement), and
+`ThirdPersonEvents#onClientTickPre` calls `TargetLockManager.tick()`.
+
+Not implemented yet: an on-screen target marker/reticle (the highlight is the glow outline only).
 
 ## Adding a mixin
 

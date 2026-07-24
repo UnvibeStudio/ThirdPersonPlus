@@ -7,6 +7,7 @@ import com.github.leawind.thirdperson.api.client.event.MouseTurnPlayerStartEvent
 import com.github.leawind.thirdperson.api.client.event.RenderEntityEvent;
 import com.github.leawind.thirdperson.api.client.event.RenderTickStartEvent;
 import com.github.leawind.thirdperson.api.client.event.ThirdPersonCameraSetupEvent;
+import com.github.leawind.thirdperson.core.targetlock.TargetLockManager;
 import com.github.leawind.thirdperson.mixin.MinecraftInvoker;
 import com.github.leawind.thirdperson.util.ItemPredicateUtil;
 import com.github.leawind.thirdperson.util.math.LMath;
@@ -82,6 +83,8 @@ public final class ThirdPersonEvents {
     }
     ThirdPerson.ENTITY_AGENT.onClientTickStart();
     ThirdPerson.CAMERA_AGENT.onClientTickStart();
+    // Release the soft lock when the target died, went out of range or out of sight.
+    TargetLockManager.tick();
   }
 
   private static void onClientStopping(Minecraft minecraft) {

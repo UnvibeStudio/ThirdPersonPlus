@@ -1,6 +1,7 @@
 package com.github.leawind.thirdperson;
 
 import com.github.leawind.thirdperson.core.rotation.RotateTargetEnum;
+import com.github.leawind.thirdperson.core.targetlock.TargetLockManager;
 import com.github.leawind.thirdperson.util.modkeymapping.ModKeyMapping;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
@@ -28,6 +29,15 @@ public final class ThirdPersonKeys {
 
   public static final ModKeyMapping FORCE_AIMING =
       ModKeyMapping.of(getId("force_aiming"), CATEGORY);
+
+  /**
+   * Soft target lock. A short press locks on to the best candidate in front of the crosshair and
+   * cycles to the next one when pressed again; holding the key releases the lock.
+   */
+  public static final ModKeyMapping TARGET_LOCK =
+      ModKeyMapping.of(getId("target_lock"), CATEGORY)
+          .onPress(TargetLockManager::onLockKeyPressed)
+          .onHold(TargetLockManager::clear);
 
   public static final ModKeyMapping TOGGLE_MOD_ENABLE =
       ModKeyMapping.of(getId("toggle_mod_enable"), CATEGORY)

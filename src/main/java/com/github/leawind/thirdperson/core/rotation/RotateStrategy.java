@@ -2,6 +2,7 @@ package com.github.leawind.thirdperson.core.rotation;
 
 import com.github.leawind.thirdperson.ThirdPerson;
 import com.github.leawind.thirdperson.ThirdPersonStatus;
+import com.github.leawind.thirdperson.core.targetlock.TargetLockManager;
 import com.github.leawind.thirdperson.util.math.decisionmap.DecisionMap;
 import java.util.List;
 import net.minecraft.client.Minecraft;
@@ -19,6 +20,7 @@ public final class RotateStrategy {
     builder.factor("force_rotate", Factor::forceRotate);
     builder.factor("is_passenger", Factor::isPassenger);
     builder.factor("is_vehicle_living_entity", Factor::isVehicleLivingEntity);
+    builder.factor("target_lock", Factor::isTargetLocked);
 
     builder.whenDefault(Do::defaultOperation);
     builder.when(List.of("is_passenger", "~is_vehicle_living_entity"), Do::ridingNonLivingEntity);
@@ -29,6 +31,8 @@ public final class RotateStrategy {
     builder.when("fall_flying", Do::fallFlying);
     builder.when("force_rotate", Do::defaultOperation);
     builder.when("aiming", Do::aiming);
+    // A soft lock should keep the player looking at the target regardless of the rotate mode.
+    builder.when("target_lock", Do::targetLock);
     return builder.build();
   }
 
@@ -63,6 +67,10 @@ public final class RotateStrategy {
 
     static boolean isVehicleLivingEntity() {
       return ThirdPerson.ENTITY_AGENT.getRawCameraEntity().getVehicle() instanceof LivingEntity;
+    }
+
+    static boolean isTargetLocked() {
+      return ThirdPerson.getConfig().target_lock_enabled && TargetLockManager.isLocked();
     }
 
     static boolean forceRotate() {
@@ -118,6 +126,13 @@ public final class RotateStrategy {
       ThirdPerson.ENTITY_AGENT.setRotateTarget(RotateTargetEnum.HORIZONTAL_IMPULSE_DIRECTION);
       ThirdPerson.ENTITY_AGENT.setRotationSmoothType(SmoothTypeEnum.EXP);
       return 0.1;
+    }
+
+    /** Soft lock: follow the locked target with a smoothed head/aim rotation. */
+    static double targetLock() {
+      ThirdPerson.ENTITY_AGENT.setRotateTarget(RotateTargetEnum.INTEREST_POINT);
+      ThirdPerson.ENTITY_AGENT.setRotationSmoothType(SmoothTypeEnum.EXP_LINEAR);
+      return 0.05;
     }
 
     static double sprint() {
