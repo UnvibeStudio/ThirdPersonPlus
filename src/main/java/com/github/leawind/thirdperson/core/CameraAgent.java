@@ -127,19 +127,15 @@ public class CameraAgent {
   /**
    * The effective vertical field of view, in degrees.
    *
-   * <p>Minecraft 26.1 removed {@code GameRenderer#getFov}; the camera state now only exposes the
-   * projection matrix, so the vertical FOV is recovered from it ({@code m11 = 1 / tan(fovY / 2)}).
-   * Before the first frame is extracted the matrix is not usable yet, so the configured FOV is used
-   * as a fallback.
+   * <p>Minecraft 26.1 removed {@code GameRenderer#getFov(Camera, float, boolean)}; the field of view
+   * is now computed by the camera itself and exposed through {@link Camera#getFov()}. Before the
+   * first frame has been rendered the value is still zero, so the configured FOV is used as a
+   * fallback.
    */
   private static double getEffectiveFovDegrees(@NotNull Minecraft minecraft) {
-    var levelRenderState = minecraft.gameRenderer.getGameRenderState().levelRenderState;
-    var cameraRenderState = levelRenderState == null ? null : levelRenderState.cameraRenderState;
-    if (cameraRenderState != null && cameraRenderState.projectionMatrix != null) {
-      float m11 = cameraRenderState.projectionMatrix.m11();
-      if (m11 > 1.0E-5F) {
-        return Math.toDegrees(2 * Math.atan(1.0 / m11));
-      }
+    float fov = minecraft.gameRenderer.getMainCamera().getFov();
+    if (fov > 1.0E-5F) {
+      return fov;
     }
     return minecraft.options.fov().get();
   }

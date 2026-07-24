@@ -9,8 +9,9 @@ import org.spongepowered.asm.mixin.injection.At;
 @SuppressWarnings("unused")
 @Mixin(value = Gui.class, priority = 2000)
 public class GuiMixin {
+  // 26.1 renders the HUD from an extracted render state: renderCrosshair -> extractCrosshair
   @ModifyExpressionValue(
-      method = "renderCrosshair",
+      method = "extractCrosshair",
       at = @At(value = "INVOKE", target = "Lnet/minecraft/client/CameraType;isFirstPerson()Z"))
   private boolean isFirstPerson(boolean isFirstPersonReally) {
     return isFirstPersonReally || ThirdPersonStatus.forceThirdPersonCrosshair;
